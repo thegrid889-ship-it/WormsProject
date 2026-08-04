@@ -7,26 +7,30 @@
 <body style="margin:0;background:#111">
 <canvas id="c" width="1280" height="720"></canvas>
 <script src="js/config.js"></script>
-<script src="js/textures.js"></script>
+<script src="js/refmaps.js"></script>
 <script src="js/terrain.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded', function () {
-  var cv = document.getElementById('c');
-  var ctx = cv.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, 1280, 720);
-  var keys = ['travnik', 'pisky', 'snih', 'sopka', 'kamen'];
-  var cols = 3;
-  var cellW = 427, cellH = 240;
-  for (var i = 0; i < keys.length; i++) {
-    Terrain.build(keys[i]);
-    var cx = (i % cols) * cellW;
-    var cy = Math.floor(i / cols) * cellH;
-    ctx.drawImage(Terrain.cv, 0, 0, 1280, 720, cx, cy, cellW, cellH);
-    ctx.strokeStyle = '#333';
-    ctx.strokeRect(cx, cy, cellW, cellH);
-  }
-  document.title = 'shot done';
+  Terrain.preload().then(function () {
+    var cv = document.getElementById('c');
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, 1280, 720);
+    var keys = ['travnik', 'pisky', 'snih', 'sopka', 'kamen'];
+    var cols = 3;
+    var cellW = 427, cellH = 240;
+    for (var i = 0; i < keys.length; i++) {
+      Terrain.build(keys[i]);
+      var cx = (i % cols) * cellW;
+      var cy = Math.floor(i / cols) * cellH;
+      ctx.drawImage(Terrain.cv, 0, 0, 1280, 720, cx, cy, cellW, cellH);
+      ctx.strokeStyle = '#333';
+      ctx.strokeRect(cx, cy, cellW, cellH);
+    }
+    document.title = 'shot done';
+  }, function () {
+    document.title = 'shot preload fail';
+  });
 });
 </script>
 </body>
