@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>shot</title>
+</head>
+<body style="margin:0;background:#111">
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="js/config.js"></script>
+<script src="js/textures.js"></script>
+<script src="js/terrain.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  Terrain.build('travnik');
+  var cv = document.getElementById('c');
+  var ctx = cv.getContext('2d');
+  ctx.drawImage(Terrain.cv, 0, 0);
+  document.title = 'shot done';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>castletest</title>
+</head>
+<body>
+<script src="js/config.js"></script>
+<script src="js/textures.js"></script>
+<script src="js/terrain.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  try {
+    var cx = 640;
+    var fails = 0;
+    var failInfo = [];
+    function countRect(x0, y0, x1, y1) {
+      var c = 0;
+      for (var y = y0; y <= y1; y++) for (var x = x0; x <= x1; x++) if (Terrain.solid(x, y)) c++;
+      return c;
+    }
+    function colProbe(x) {
+      var s = '';
+      for (var y = 160; y <= 230; y += 10) s += Terrain.solid(x, y) ? '#' : '.';
+      return s;
+    }
+    function testRun() {
+      var topY = Terrain.surfaceY(475) + 24;
+      var baseTop = topY + 76;
+      var ok = true;
+      var detail = '';
+      function chk2(name, v) { if (!v) { ok = false; detail += name + ' '; } }
+      chk2('lt', Terrain.solid(449, topY - 10));
+      chk2('rt', Terrain.solid(831, topY - 10));
+      chk2('wall', Terrain.solid(540, topY - 5));
+      chk2('wallTop', Terrain.solid(540, topY - 12));
+      chk2('batt', Terrain.solid(511, topY - 12));
+      chk2('gateOpen', !Terrain.solid(640, topY + 20));
+      chk2('arch', Terrain.solid(627, topY + 2));
+      chk2('tall', Terrain.solid(450, topY - 30));
+      chk2('inside', !Terrain.solid(640, baseTop - 20));
+      chk2('mound', Terrain.solid(580, baseTop + 20));
+      chk2('towerBody', Terrain.solid(475, topY - 10));
+      var bumps = 0;
+      for (var x2 = 100; x2 < 300; x2++) {
+        var s1 = Terrain.surfaceY(x2);
+        var s2 = Terrain.surfaceY(x2 - 1);
+        if (Math.abs(s1 - s2) > 2) bumps++;
+      }
+      chk2('smooth', bumps < 5);
+      return { ok: ok, detail: detail, topY: topY, baseTop: baseTop };
+    }
+    for (var run = 0; run < 10; run++) {
+      Terrain.build('travnik');
+      var r = testRun();
+      if (!r.ok) {
+        fails++;
+        failInfo.push('run' + run + ':base=' + r.baseTop + ':s449=' + Terrain.surfaceY(449) + ':s540=' + Terrain.surfaceY(540) + ':s640=' + Terrain.surfaceY(640) + ':s831=' + Terrain.surfaceY(831) + ':towerSolid=' + countRect(449, r.topY - 40, 501, r.baseTop + 40) + ':' + r.detail);
+      } else { failInfo.push('run' + run + ':OK'); }
+    }
+    document.title = 'CASTLE10 runs=' + (10 - fails) + '/10' + (fails ? ' FAILS: ' + failInfo.join(' | ') : ' ALL OK');
+  } catch (e) {
+    document.title = 'CASTLE EXC: ' + e.message;
+  }
+});
+</script>
+</body>
+</html>
