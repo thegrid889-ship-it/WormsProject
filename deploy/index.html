@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Červi – webová bitva</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐛</text></svg>">
+<link rel="stylesheet" href="css/style-260804-225552.css">
+</head>
+<body>
+<div id="app">
+
+  <section id="screen-menu" class="screen">
+    <h1 class="title">🐛 Červi</h1>
+    <p class="sub">Webová bitva ničitelných červů</p>
+    <div class="menu-btns">
+      <button id="btn-single" class="big">🎮 Proti počítači</button>
+      <button id="btn-local" class="big">👥 2 hráči (jeden počítač)</button>
+      <button id="btn-online" class="big soon">🌐 Online <span class="badge">brzy</span></button>
+    </div>
+    <p class="hint">Před každou hrou vygeneruješ tvar mapy a vybereš texturu.</p>
+  </section>
+
+  <section id="screen-setup" class="screen hidden">
+    <h2 id="setup-title">Příprava mapy</h2>
+    <div class="setup-box card">
+      <div class="map-preview-wrap">
+        <canvas id="map-preview" width="360" height="202"></canvas>
+      </div>
+      <div class="row center">
+        <button id="btn-gen-map" class="btn">🔄 Vygenerovat nový tvar mapy</button>
+      </div>
+      <div id="tex-picker"></div>
+      <div class="row center">
+        <button id="btn-back" class="btn">← Zpět</button>
+        <button id="btn-start" class="btn big-cta">🚀 Začít hru</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-game" class="screen hidden">
+    <button id="btn-pause" title="Pauza / menu (Esc)">☰</button>
+    <div id="hud">
+      <div id="team-red" class="team-panel red"></div>
+      <div id="hud-center">
+        <div id="turn-label">Tah</div>
+        <div id="turn-bar-wrap"><div id="turn-bar"></div></div>
+        <div id="wind"><span id="wind-arrow">➤</span><span id="wind-val">0</span></div>
+      </div>
+      <div id="team-blue" class="team-panel blue"></div>
+    </div>
+    <div id="canvas-wrap">
+      <canvas id="game-canvas" width="1280" height="720"></canvas>
+    </div>
+    <div id="weapon-table"></div>
+    <div id="controls-hint">Míření: myš &nbsp;·&nbsp; Síla: drž tlačítko, pusť = výstřel &nbsp;·&nbsp; Zruš: pravé tlačítko / Esc &nbsp;·&nbsp; P1: WASD + W skok &nbsp;·&nbsp; P2: šipky + ↑ &nbsp;·&nbsp; Klik na červa = výběr &nbsp;·&nbsp; Esc = pauza</div>
+    <div id="msg"></div>
+    <div id="overlay" class="hidden">
+      <div id="overlay-text"></div>
+      <div class="overlay-btns">
+        <button id="btn-rematch" class="big">🔁 Znovu</button>
+        <button id="btn-menu" class="big">🏠 Menu</button>
+      </div>
+    </div>
+    <div id="pause-overlay" class="hidden">
+      <div class="pause-box">
+        <div id="pause-text">⏸ Pauza</div>
+        <div class="overlay-btns">
+          <button id="btn-resume" class="big">▶ Pokračovat</button>
+          <button id="btn-pause-menu" class="big">🏠 Menu</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  <script src="js/app-260804-225552.js"></script>
+</body>
+</html>

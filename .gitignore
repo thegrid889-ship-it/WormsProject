@@ -1,0 +1,19 @@
+# Zdrojové soubory hry - zůstávají lokálně, do public repa jde jen minifikovaný build
+/build.py
+/WormsProject/
+/index.html
+/js/config.js
+/js/textures.js
+/js/sfx.js
+/js/terrain.js
+/js/physics.js
+/js/weapons.js
+/js/projectiles.js
+/js/crates.js
+/js/ai.js
+/js/game.js
+/js/ui.js
+/js/room.js
+/js/main.js
+/js/smoke.js
+/css/style.css
