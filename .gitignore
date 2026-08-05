@@ -1,11 +1,17 @@
 # Zdrojové soubory hry - zůstávají lokálně, do public repa jde jen minifikovaný build
 /build.py
 /gen_refmaps.py
+/gen_textures.py
+/analyze_photos.py
+/probe_photos.py
+/analysis.json
+/TODO.md
 /ref/
 /WormsProject/
 /index.html
 /js/config.js
 /js/refmaps.js
+/js/textures.js
 /js/sfx.js
 /js/terrain.js
 /js/physics.js

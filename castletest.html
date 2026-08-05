@@ -6,7 +6,7 @@
 </head>
 <body>
 <script src="js/config.js"></script>
-<script src="js/refmaps.js"></script>
+<script src="js/textures.js"></script>
 <script src="js/terrain.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded', function () {
@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', function () {
     try {
       var fails = 0;
       var failInfo = [];
-      for (var tk in REFMAPS) {
+      for (var tk in TEXTURES) {
         Terrain.build(tk);
         var bad = [];
         var nSolid = 0;
@@ -40,6 +40,12 @@ window.addEventListener('DOMContentLoaded', function () {
           fails++;
           failInfo.push(tk + ':' + bad.join(','));
         }
+      }
+      Terrain.build('travnik');
+      var cs = Terrain.castle;
+      if (!cs || cs.w < 100 || cs.h < 100) {
+        fails++;
+        failInfo.push('castle missing');
       }
       document.title = 'MAPTEST ' + (fails ? 'FAIL: ' + failInfo.join(' | ') : 'ALL OK');
     } catch (e) {

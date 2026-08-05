@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html><html><head><meta charset="utf-8">
+<script>
+var __log = [];
+var old = console.error; console.error = function (m) { __log.push(String(m)); old.apply(console, arguments); };
+window.addEventListener('error', function (e) { __log.push('window error: ' + e.message); });
+</script>
+</head><body>
+<div id="app"></div>
+<canvas id="game-canvas" width="1280" height="720"></canvas>
+<script src="file:///C:/UE_Projects/WormsProject/deploytest.js"></script>
+<div id="out">RUNNING</div>
+<script>
+var out = document.getElementById('out');
+var __res = function (t) { out.textContent = t; };
+try {
+  var w = window.__T || {};
+  if (!w.preload) { __res('no __T'); } else {
+    w.preload().then(function () {
+      var fails = [];
+      var keys = ['kamen', 'sopka', 'snih', 'pisky', 'travnik'];
+      var n = 0;
+      for (var i = 0; i < keys.length; i++) {
+        try { w.build(keys[i], 1); n++; }
+        catch (e) { fails.push(keys[i] + ':' + e.message); }
+      }
+      var cr = w.castle;
+      var castleOk = cr && cr.w > 0 && cr.h > 0;
+      if (cr) {
+        var sx = cr.x + Math.floor(cr.w / 2), sy = cr.y + cr.h - 5;
+        var cnt = 0;
+        for (var yy = cr.y; yy < cr.y + cr.h && yy < 660; yy++) {
+          for (var xx = cr.x; xx < cr.x + cr.w; xx++) {
+            if (w.solid && w.solid(xx, yy)) cnt++;
+          }
+        }
+        if (w.solid && w.solid(sx, sy)) castleOk = castleOk && 'solid=true';
+        else castleOk = castleOk + ' solid=false';
+        try { w.destroyCircle(sx, sy, 8); } catch (e) { fails.push('carve:' + e.message); }
+        castleOk = castleOk + (w.solid && !w.solid(sx, sy) ? ' carved=true' : ' carved=false');
+        castleOk = castleOk + ' solidCnt=' + cnt;
+      } else {
+        fails.push('castle missing');
+      }
+      __res('TEXTURES=' + n + ' castle=' + (cr ? cr.w + 'x' + cr.h + '@' + cr.x + ',' + cr.y : 'none') + ' ' + castleOk + ' bg=' + (w.bg ? 'OK' : 'missing') + (fails.length ? ' FAIL: ' + fails.join('|') : ''));
+    }, function (e) { __res('PRELOAD FAIL: ' + e); });
+  }
+} catch (e) {
+  __res('EXC: ' + e.message + (__log.length ? ' LOG: ' + __log.slice(0, 3).join(' | ') : ''));
+}
+</script></body></html>
+
+
+
